@@ -146,3 +146,4 @@ python -m src.app
 ## Ghi chú cho tài liệu
 
 Tài liệu này đã được viết để người **chưa biết gì cũng có thể cài và chạy**, từ bước tạo venv, cài Flask, chạy server, test bằng Postman. Nếu bạn là người đọc mới, chỉ cần làm đúng từng bước là có thể chạy được.
+"# test" 
