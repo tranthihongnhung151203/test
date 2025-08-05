@@ -2,7 +2,17 @@
 
 ## 1. Giới thiệu dự án
 
-Dự án này là một backend webhook tích hợp với Dialogflow CX, dùng để xử lý các intent như booking phòng, đánh giá dịch vụ, đặt dịch vụ trong khách sạn,...
+Dự án này là một backend webhook mạnh mẽ, được xây dựng bằng Python và Flask, tích hợp với nền tảng chatbot Dialogflow CX của Google. Mục tiêu của dự án là tự động hóa các tác vụ tương tác cơ bản với khách hàng trong lĩnh vực khách sạn, bao gồm:
+
+* **Xử lý các yêu cầu đặt phòng**
+
+* **Cung cấp thông tin và đặt các dịch vụ nội bộ**
+
+* **Tiếp nhận phản hồi và đánh giá từ khách hàng**
+
+* **Cung cấp các chương trình khuyến mãi và thông tin khách sạn**
+
+Dự án này đóng vai trò như một bộ não, nhận dữ liệu từ chatbot và xử lý logic nghiệp vụ, sau đó phản hồi lại cho khách hàng một cách thông minh và nhanh chóng.
 
 **Công nghệ sử dụng:**
 
@@ -87,19 +97,19 @@ Trước khi bắt đầu, hãy chắc chắn bạn đã cài đặt và thiết
  * Chuẩn bị Dialogflow CX
  * Cấu hình Dialogflow CX
    
-   **1.Tạo Intent:**
+   **1. Tạo Intent:**
    
    -tạo intent trong **manage**
    
    -thêm các **Training phrases**
 
-   **2.Thiết kế luồng gọi Webhook:**
+   **2. Thiết kế luồng gọi Webhook:**
    
    -vào **Build-> Default Start Flow -> Start Page**
    
    -tạo **Routes** mới -> chọn intent -> **Transition -> Page**: tạo trang
 
-    **3.Cấu hình Page để gọi Webhook:**
+    **3. Cấu hình Page để gọi Webhook:**
 
    -nhấp vào page vừa tạo -> phần **Entry fulfillment**:  Đây là nơi chúng ta sẽ ra lệnh cho Dialogflow gọi đến server Flask ngay khi cuộc trò chuyện đi vào trang này
 
@@ -126,6 +136,7 @@ def get_db_connection():
         print(f"Lỗi kết nối database: {err}")
         return None 
 ```
+**kết nối với MySQL** qua file db.py  
  
 **file app.py**
 ```python
