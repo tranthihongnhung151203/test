@@ -179,11 +179,63 @@ Running on http://127.0.0.1:5000
 
 
 ## 6. Chi tiết các tag xử lý
-* booking_tags
-* cancel_tags
-* edit_tags
-* available_room_tags
+**booking_tags**
 
+ * booking
+   
+**cancel_tags**
+
+* cancel_booking
+* booking_id 
+* phone 
+* email
+    
+**edit_tags**
+
+ * update_booking
+ * booking_id
+ * checkin_date
+ * checkout_date
+ * adults
+ * children
+    
+**available_room_tags**
+
+  * available_room
+  * destination
+  * checkin_date
+  * checkout_date
+  * room_type
+  * adults
+  * children
+    
+**Promotion và Dịch Vụ**
+
+  * promotion_offers
+  * hotel_services
+  * activity_services
+  * contact_information
+  * room_information
+
+**In-Stay**
+
+  * check_out
+  * extend_stay
+  * invoice_info
+  * book_service
+  * add_service
+  * list_internal_service
+  * get_articles
+  * get_article_detail
+  * search_articles
+
+**Cách Sử Dụng Tag**
+-Trong hàm webhook(), các tag này được sử dụng để xác định hành động nào sẽ được thực hiện dựa trên yêu cầu từ Dialogflow. Mỗi tag sẽ dẫn đến một hàm xử lý cụ thể, ví dụ:
+
+* Nếu tag là **'booking'**, hàm **booking_webhook(req)** sẽ được gọi.
+* Nếu tag là **'cancel_booking'**, hàm **cancel_webhook(req)** sẽ được gọi.
+* Tương tự cho các tag khác.
+  
 ## 7. Ghi chú cho người mới
 
 **Để test đúng**, bạn phải:
