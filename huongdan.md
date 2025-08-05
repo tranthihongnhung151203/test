@@ -4,7 +4,7 @@
 
 Dự án này là một backend webhook tích hợp với Dialogflow CX, dùng để xử lý các intent như booking phòng, đánh giá dịch vụ, đặt dịch vụ trong khách sạn,...
 
-Công nghệ sử dụng:
+**Công nghệ sử dụng:**
 
 * **Python 3.12**
 * **Flask** làm web framework
@@ -12,7 +12,7 @@ Công nghệ sử dụng:
 
 
 ## 2. Cấu trúc thư mục
-
+```
 AI-integrate/
 └── src/
     ├── app.py                # File chạy chính
@@ -36,7 +36,7 @@ AI-integrate/
     ├
     └── __pycache__/         # Cache file Python (tự sinh ra)
 
-
+```
 ## 3. Yêu cầu hệ thống
 
 * Python >= 3.10
@@ -44,85 +44,139 @@ AI-integrate/
 * Postman để test API (tuỳ chọn)
 * Google Dialogflow CX
 
+## 4. Chuẩn bị môi trường 
+Trước khi bắt đầu, hãy chắc chắn bạn đã cài đặt và thiết lập xong các công cụ sau:
 
-## 4. Cài đặt & chạy dự án
+* **Tài khoản Google:** Cần thiết để sử dụng các dịch vụ của Google Cloud, bao gồm cả Dialogflow CX.
 
-### Bước 1: Clone project
+* **Python 3:** Tải và cài đặt Python từ trang chủ python.org. Trong quá trình cài đặt, hãy nhớ tick vào ô "Add Python to PATH".
 
-cd AI-integrate
+* **Visual Studio Code (hoặc Text Editor bất kỳ):** Một trình soạn thảo mã nguồn để viết code Python. VS Code được khuyên dùng vì có nhiều tiện ích hỗ trợ.
 
-### Bước 2: Tạo môi trường ảo
+* **Tạo dự án trên Google Cloud:**
 
-python -m venv venv
-venv\Scripts\activate  # Windows
-source venv/bin/activate  # Trên macOS/Linux
+  -Truy cập Google Cloud Console.
 
-### Bước 3: Cài đặt thư viện
+  -Tạo một dự án mới (ví dụ: hotel-chatbot-project).
 
-pip install flask
+  -Kích hoạt thanh toán (Billing) cho dự án. Dialogflow CX có bậc miễn phí, nhưng Google yêu cầu kích hoạt thanh toán để sử dụng API.
 
-### Bước 4: Chạy server
+  -Trong dự án của bạn, tìm và Enable API "Dialogflow API".
+### Phần 1. Cài đặt
 
-cd src
-python app.py
+ **Bước 1: Clone project**
+ 
+    git clone <link dự án>
 
-* Sau đó, bạn sẽ thấy dòng:
+    cd AI-integrate
+
+**Bước 2: Tạo môi trường ảo**
+
+    python -m venv venv
+
+    venv\Scripts\activate  # Windows
+
+    source venv/bin/activate  # Trên macOS/Linux
+
+**Bước 3: Cài đặt thư viện**
+
+    pip install flask
+
+
+ ### Phần 2: Xây dựng Chatbot cơ bản với Dialogflow CX
+ * Chuẩn bị Dialogflow CX
+ * Cấu hình Dialogflow CX
+   
+   **1.Tạo Intent:**
+   
+   -tạo intent trong **manage**
+   
+   -thêm các **Training phrases**
+
+   **2.Thiết kế luồng gọi Webhook:**
+   
+   -vào **Build-> Default Start Flow -> Start Page**
+   
+   -tạo **Routes** mới -> chọn intent -> **Transition -> Page**: tạo trang
+
+    **3.Cấu hình Page để gọi Webhook:**
+
+   -nhấp vào page vừa tạo -> phần **Entry fulfillment**:  Đây là nơi chúng ta sẽ ra lệnh cho Dialogflow gọi đến server Flask ngay khi cuộc trò chuyện đi vào trang này
+
+   -**Quan trọng:** Trong phần **Tag**, nhập một cái tên định danh cho yêu cầu này. Server Flask sẽ dùng tag này để biết phải làm gì.
+
+
+ ### Phần 3: Xây dựng Webhook với Python Flask
+**file db.py**
+```python
+import mysql.connector
+
+DB_CONFIG = {
+    'host': 'localhost',
+    'user': 'root',
+    'password': '',
+    'database': 'flamingo_db'
+}
+
+def get_db_connection():
+    try:
+        connection = mysql.connector.connect(**DB_CONFIG)
+        return connection
+    except mysql.connector.Error as err:
+        print(f"Lỗi kết nối database: {err}")
+        return None 
+```
+ 
+**file app.py**
+```python
+ import os
+from flask import Flask, request, jsonify
+
+**Khởi tạo Flask app**
+app = Flask(__name__)
+
+**Định nghĩa route cho webhook, chỉ chấp nhận phương thức POST**
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    """Hàm này xử lý tất cả các yêu cầu gửi đến từ Dialogflow."""
+    
+    # Lấy dữ liệu JSON từ request
+    try:
+        req = request.get_json(force=True)
+    except Exception as e:
+        # Nếu không có JSON, trả về lỗi
+        return jsonify({"error": f"Invalid JSON received: {e}"}), 400
+
+    # Lấy "tag" mà chúng ta đã đặt trong Dialogflow Fulfillment
+    # Dùng .get() để tránh lỗi nếu key không tồn tại
+    tag = req.get('fulfillmentInfo', {}).get('tag')
+    
+    response_text = ""
+    
+    if tag == ' ':
+        response = (req)
+
+    # Thêm các điều kiện 'elif tag == ...' khác ở đây cho các intent khác
+
+    else:
+        # Nếu không có tag nào khớp, trả về một câu trả lời mặc định
+        response_text = "Xin lỗi, tôi không hiểu yêu cầu của bạn."
+
+# Chạy server
+if __name__ == '__main__':
+
+    app.run( port=port, debug=True)
+```
+**Chạy server**
+
+    cd src
+
+    python app.py
+
+* khi chạy dự án bạn sẽ thấy dòng:
 
 Running on http://127.0.0.1:5000
 
-
-## 5. Kiểm thử với Postman
-
-### URL:
-
-POST http://127.0.0.1:5000/webhook
-
-### Ví dụ body test (Tag: `booking`)
-
-```json
-{
-  "fulfillmentInfo": {
-    "tag": "booking"
-  },
-  "sessionInfo": {
-    "session": "projects/demo-project/sessions/demo-session"
-  },
-  "parameters": {
-    "destination": "Cát Bà",
-    "room_type": "villa",
-    "checkin_date": "10/08/2024",
-    "checkout_date": "12/08/2024",
-    "adults": 2,
-    "children": 2,
-    "name": "Nguyễn Văn A",
-    "email": "a@gmail.com",
-    "phone": "0987654321",
-    "budget": 5000000,
-    "hotel_class": 4
-  },
-  "languageCode": "vi"
-}
-```
-
-Kết quả (ví dụ):
-
-```json
-{
-  "fulfillment_response": {
-    "messages": [
-      {
-        "text": {
-          "text": [
-            "✅ Đặt phòng thành công! Mã booking: #123. Cảm ơn bạn đã đặt phòng tại Cát Bà Resort."
-          ]
-        }
-      }
-    ]
-  }
-}
-```
-
----
 
 ## 6. Chi tiết các tag xử lý
 * booking_tags
