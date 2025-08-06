@@ -63,7 +63,7 @@ AI-integrate/
 
 * **Visual Studio Code (hoặc Text Editor bất kỳ):** Một trình soạn thảo mã nguồn để viết code Python. VS Code được khuyên dùng vì có nhiều tiện ích hỗ trợ.
 
-* **Tạo dự án trên Google Cloud:**
+* **Tạo dự án trên Google Cloud:** :cloud:
 
   * Truy cập Google Cloud Console.
 
@@ -215,7 +215,7 @@ if __name__ == '__main__':
 
 * Bạn sẽ thấy mục **"Create table"**. Nhập tên bảng là **bookings** và số lượng cột (ví dụ: 7 cột cho các trường cơ bản).
 
-* Nhấn Create. :heavy_plus_sign:
+* Nhấn **Create**. :heavy_plus_sign:
 
 * Điền thông tin cho từng cột như sau:
 
@@ -257,11 +257,11 @@ children|	INT|	11
 
 * Mở file src/db.py và đảm bảo phần DB_CONFIG của bạn chính xác với cài đặt MySQL của XAMPP.
 
-    * **host**: Luôn là 'localhost' hoặc '127.0.0.1' cho môi trường cục bộ.
+    * **host**: Luôn là 'localhost' :white_check_mark: hoặc '127.0.0.1':white_check_mark:  cho môi trường cục bộ.
 
     * **user**: Mặc định là 'root'.
 
-    * **password**: Điền mật khẩu bạn đã đặt cho user root trong MySQL (hoặc để trống nếu bạn chưa đặt mật khẩu).
+    * **password** :key: : Điền mật khẩu bạn đã đặt cho user root trong MySQL (hoặc để trống nếu bạn chưa đặt mật khẩu).
 
     * **database**: Tên database bạn đã tạo trong phpMyAdmin (ví dụ: 'flamingo_db')
  
