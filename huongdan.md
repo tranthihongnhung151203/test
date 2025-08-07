@@ -14,11 +14,37 @@ Dự án này là một backend webhook mạnh mẽ, được xây dựng bằng
 
 Dự án này đóng vai trò như một bộ não, nhận dữ liệu từ chatbot và xử lý logic nghiệp vụ, sau đó phản hồi lại cho khách hàng một cách thông minh và nhanh chóng.
 
-:computer: **Công nghệ sử dụng:**
+  ### Công nghệ sử dụng: :computer:
 
 * **Python 3.12**
 * **Flask** làm web framework
 * Kết nối cơ sở dữ liệu thông qua file `db.py`
+
+ ### Quy trình hoạt động của hệ thống  🧠
+* Người dùng gửi tin nhắn :envelope: đến **chatbot**
+
+* **Dialogflow CX** phân tích:
+
+    * Hiểu ý định (Intent)
+
+    * Trích xuất thực thể (Entities) nếu có
+
+* **Dialogflow CX** gọi tới **Webhook Flask** (dựa trên tag đã cấu hình)
+
+* **Webhook Flask** thực hiện:
+
+     * Xử lý logic nghiệp vụ
+
+     * Kết nối MySQL (XAMPP) nếu cần truy vấn dữ liệu
+
+* **Webhook Flask** trả kết quả về cho **Dialogflow CX**
+
+* **Dialogflow CX** gửi phản hồi cuối cùng tới người dùng
+
+📌 *Hệ thống hoạt động như một "vòng tròn khép kín":* 
+
+Người dùng → Dialogflow → Webhook → Dialogflow → Người dùng
+
 
 
 ## 2. Cấu trúc thư mục  :gear:
@@ -144,17 +170,20 @@ def webhook():
     # Dùng .get() để tránh lỗi nếu key không tồn tại
     tag = req.get('fulfillmentInfo', {}).get('tag')
     
-    response_text = ""
+    response_text = "Chào mừng bạn đến với webhook!"
+# Chú thích: Tại đây, bạn sẽ gọi hàm xử lý tương ứng với tag
+# Ví dụ: if tag == 'booking': response_text = booking_webhook(req)
     
-  if tag == 'booking':
-    return booking_webhook(req)
-...
-
-    # Thêm các điều kiện 'elif tag == ...' khác ở đây cho các intent khác
-
-    else:
-        # Nếu không có tag nào khớp, trả về một câu trả lời mặc định
-        response_text = "Xin lỗi, tôi không hiểu yêu cầu của bạn."
+ if tag == 'booking_tags':
+    # Giả sử bạn có hàm booking_webhook trong booking.py
+    # Bạn sẽ import và gọi nó ở đây
+    response_text = booking_webhook(req)
+elif tag == 'cancel_tags':
+    # Tương tự, gọi hàm xử lý cho cancel
+    response_text = cancel_webhook(req)
+else:
+    # Xử lý các tag không xác định
+    response_text = "Xin lỗi, tôi không hiểu yêu cầu của bạn."
 
 # Chạy server
 if __name__ == '__main__':
