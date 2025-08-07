@@ -35,7 +35,7 @@ AI-integrate/
     │   └── edit.py
     │   └── promotion.py
     │   └── reviews.py
-    │   └── room_infornation.py
+    │   └── room_information.py
     │   └── services.py
     │   └── utils.py
     ├── in_stay/             # Trong quá trình lưu trú
@@ -146,8 +146,9 @@ def webhook():
     
     response_text = ""
     
-    if tag == ' ':
-        response = (req)
+  if tag == 'booking':
+    return booking_webhook(req)
+...
 
     # Thêm các điều kiện 'elif tag == ...' khác ở đây cho các intent khác
 
@@ -219,17 +220,6 @@ if __name__ == '__main__':
 
     * Giữ nguyên các thiết lập mặc định và nhấn nút **Go** (Thực hiện) ở phía dưới cùng bên phải.
 
-* Điền thông tin cho từng cột như sau:
-
-Tên cột|	Kiểu dữ liệu	|Độ dài/Giá trị|	Thuộc tính	|Index|	A.I.
-------|-------------|------------|-----------|---------|-------
-id|	INT	|11|	UNSIGNED|	PRIMARY|	✅
-destination|	VARCHAR|	255			
-room_type|	VARCHAR|	255			
-checkin_date|	DATE				
-checkout_date|	DATE				
-adults|	INT|	11			
-children|	INT|	11
 
  :exclamation: Lưu ý:
 
