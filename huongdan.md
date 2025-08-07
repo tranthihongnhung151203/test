@@ -28,7 +28,7 @@ AI-integrate/
     ├── app.py                # File chạy chính
     ├── db.py                 # Kết nối cơ sở dữ liệu
     ├── pre_stay/            # Logic xử lý trước khi lưu trú
-    │   └── activities.py       # Xử lý booking phòng
+    │   └── activities.py       
     │   └── booking.py
     │   └── cancel.py
     │   └── contact.py
@@ -39,11 +39,10 @@ AI-integrate/
     │   └── services.py
     │   └── utils.py
     ├── in_stay/             # Trong quá trình lưu trú
-    │   └── service.py       # Xử lý đặt dịch vụ
+    │   └── service.py       
         └── check_out.py
     ├── post_stay/           # Sau khi lưu trú
-    │   └── review.py        # Xử lý đánh giá
-    ├
+    │   └── review.py       
     └── __pycache__/         # Cache file Python (tự sinh ra)
 
 ```
@@ -93,13 +92,16 @@ AI-integrate/
 
  :warning:  **Quan trọng:** Trong phần *Tag*, nhập một cái tên định danh cho yêu cầu này. Server Flask sẽ dùng tag này để biết phải làm gì.
    
-### Phần 2. Cài đặt
+### Phần 2. Cài đặt môi trường python
 
- **Bước 1: Clone project**
+ **Bước 1: Tạo hoặc Clone project có sẵn**
  
-    git clone <link dự án>
+ * Tạo dự án trong VS code, tạo folder tên **AI-integrate**
 
-    cd AI-integrate
+ * Nếu dự án đã có trong github
+   
+        git clone <link dự án>
+
 
 **Bước 2: Tạo môi trường ảo**
 
@@ -166,7 +168,7 @@ if __name__ == '__main__':
 * xác nhận đã kích hoạt được môi trường ảo, **ví dụ:**
   
        (.venv) D:\TEST AI-integrate\AI-integrate>
-* chạy file app.py
+* :point_right: chạy file app.py
   
        python app.py
 * khi chạy dự án bạn sẽ thấy dòng:
@@ -197,25 +199,25 @@ if __name__ == '__main__':
 
 * Đây là nơi bạn có thể quản lý các database, bảng, và dữ liệu của mình.
 
-**4. Tạo Database mới trong phpMyAdmin**
+**5. Import flamingo_db**(nếu có :heavy_check_mark: )
 
-* Tạo Database :exclamation:  *thủ công vì không dùng init_db()*,  bước này là bắt buộc để database và bảng của bạn tồn tại trước khi code Python cố gắng kết nối.
-  
-    * Trong phpMyAdmin, ở thanh bên trái, nhấp vào **New** (hoặc tab Databases ở trên cùng).
-  
-    *  Nhập tên database của bạn (ví dụ: flamingo_db).
+* Tạo cơ sở dữ liệu mới :file_folder:
+     * Ở menu bên trái của phpMyAdmin, chọn **New** (Mới) để tạo một cơ sở dữ liệu mới.
 
-    * Chọn **Collation** (thường là utf8mb4_unicode_ci hoặc utf8_general_ci để hỗ trợ tiếng Việt).
+     * Nhập tên cơ sở dữ liệu là **flamingo_db** (đúng theo tên bạn đã cấu hình trong file db.py của dự án).
 
-    * Nhấn **Create** :heavy_plus_sign:
+     * Nhấn nút **Create** (Tạo).
 
-**5.Tạo bảng bookings trong flamingo_db**(sau khi đã tạo được Database)
+* Nhập file SQL :page_facing_up:
+     * Sau khi tạo xong, bạn sẽ thấy cơ sở dữ liệu flamingo_db xuất hiện ở menu bên trái. Hãy chọn nó.
 
-* Sau khi tạo database flamingo_db, nhấp vào tên database đó ở thanh bên trái.
+     * Ở thanh menu phía trên, nhấp vào tab **Import** (Nhập).
 
-* Bạn sẽ thấy mục **"Create table"**. Nhập tên bảng là **bookings** và số lượng cột (ví dụ: 7 cột cho các trường cơ bản).
+     * Trong mục **File to import** (File để nhập), chọn nút **Choose File** (Chọn tệp).
 
-* Nhấn **Create**. :heavy_plus_sign:
+     * Tìm và chọn file **flamingo_db.sql** từ máy tính của bạn.
+
+    * Giữ nguyên các thiết lập mặc định và nhấn nút **Go** (Thực hiện) ở phía dưới cùng bên phải.
 
 * Điền thông tin cho từng cột như sau:
 
