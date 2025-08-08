@@ -52,7 +52,14 @@ Người dùng → Dialogflow → Webhook → Dialogflow → Người dùng
 AI-integrate/
 └── src/
     ├── app.py                # File chạy chính
-    ├── db.py                 # Kết nối cơ sở dữ liệu
+    ├── dialogflow_integration.py 
+    ├── db.py                 # Kết nối cơ sở dữ liệu 
+    ├── templates/
+    │   ├── hybrid-chatbot.html        # UI chính
+    │   └── agent-dashboard.html       # Dashboard cho nhân viên
+    ├── static/
+    │   └── css/
+    │       └── hybrid-chatbot.css     # Styles cho widget
     ├── pre_stay/            # Logic xử lý trước khi lưu trú
     │   └── activities.py       
     │   └── booking.py
@@ -66,7 +73,12 @@ AI-integrate/
     │   └── utils.py
     ├── in_stay/             # Trong quá trình lưu trú
     │   └── service.py       
-        └── check_out.py
+    │   └── check_out.py
+    │   ├── extend_stay.py            
+    │   ├── invoice_info.py           
+    │   ├── services_re.py            
+    │   ├── internal_service.py        
+    │   └── article.py     
     ├── post_stay/           # Sau khi lưu trú
     │   └── review.py       
     └── __pycache__/         # Cache file Python (tự sinh ra)
@@ -103,6 +115,40 @@ AI-integrate/
  **1. Tạo Intent:**
    
    * tạo intent trong *manage*
+     
+        * **Pre-stay** 
+          
+           - booking - Đặt phòng
+
+           - activities - các hoạt động của khách sạn
+
+           - services - Dịch vụ của khách sạn
+
+           - contact_information - Thông tin liên hệ
+
+           - promotion_offers - Khuyến mãi
+
+           - room_information - Thông tin phòng
+
+           - cancel_booking - Hủy đặt phòng
+
+           - update_booking - Chỉnh sửa đặt phòng
+
+        * **In-stay** 
+          
+           - check_out
+          
+           - extend_stay - Gia hạn lưu trú
+     
+           - invoice_info - Thông tin hóa đơn
+     
+           - services - Dịch vụ trong khách sạn
+     
+           - article - Bài viết 
+     
+        * **Post-stay** 
+          
+           - review - Đánh giá 
    
    * thêm các *Training phrases*
 
