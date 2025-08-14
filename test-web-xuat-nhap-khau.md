@@ -201,4 +201,4 @@
 
 6. **Kiểm tra hình ảnh**
    - `<img src="..." alt="mô tả hình ảnh chuẩn SEO">`
-
+---
